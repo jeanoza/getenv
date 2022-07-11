@@ -1,7 +1,7 @@
 /**
  * Get user's environnement datas
  * @param {function} callback 
- * @returns {{}}
+ * @returns {{}} see README.md for detail
  */
 async function GetEnv(callback) {
 	let data = {
@@ -20,17 +20,16 @@ async function GetEnv(callback) {
 	data._3dEnabled = data.gpu.gl_renderer.includes("WebGL") && isES6() ? true : false;
 	data._arEnabled = GetArCapacity(data._3dEnabled, data.device.model, data.camera)
 
-	// document.addEventListener('devicechange', e => {
-	// 	console.log(e);
-	// })
-
 	if (callback) callback(data);
 	return data;
 }
 
 /**
  * Getter user connection infos
- * @returns {{network:string, rtt:number}}
+ * @returns {{
+ * 	network:string,
+ * 	rtt:number
+ * }}
  */
 
 function GetConnect () {
