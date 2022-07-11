@@ -91,7 +91,7 @@ function GetMonitor ()
 // })
 
 /**
- * 
+ * Getter to update _arEnabled boolean in data object
  * @param {boolean} _3dEnabled 
  * @param {string | undefined} mobile 
  * @param {boolean} camera 
@@ -102,7 +102,11 @@ function GetArCapacity(_3dEnabled, mobile, camera ) {
 	return false;
 }
 
-
+/**
+ * Getter Media which verifies if user has a camera 
+ * @param {{video:boolean}} constraints 
+ * @returns {boolean}
+ */
 async function GetMedia(constraints) {
 	let stream = null;
 	try {
