@@ -54,10 +54,10 @@ To call it simply call GetEnv function
         total_heap_percent: number,
         used_heap_percent: number
     },
-    camera: false,
+    camera: boolean,
     language: string,
-    _3dEnabled: true,
-    _arEnabled: false,
+    _3dEnabled: boolean,
+    _arEnabled: boolean,
     ua: string,
     browser: {
         name: string
