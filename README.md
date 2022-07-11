@@ -78,7 +78,3 @@ To call it simply call GetEnv function
     }
 }
 ``` 
-
-## TODO : 
-
-- Add documentation comment to GetEnv function and it's returned datas
