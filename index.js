@@ -1,1 +1,1 @@
-GetEnv(console.log)
+GetEnv(data => console.log(data))

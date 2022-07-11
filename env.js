@@ -1,13 +1,12 @@
 async function GetEnv(callback) {
-	let detail = await window.getScreenDetails();
 	let result = new UAParser().getResult();
 
 	let data = {
 		es_version: isES6() ? "ES6" : "ES5",
 		monitor: {
 			capacity: {
-				width: detail.currentScreen.availWidth,
-				height: detail.currentScreen.availHeight,
+				width: window.screen.availWidth,
+				height: window.screen.availHeight,
 			},
 			current: {
 				width: window.innerWidth,
