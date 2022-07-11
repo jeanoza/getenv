@@ -19,25 +19,24 @@ async function GetEnv(callback) {
 		},
 		gpu: { ...GetGPUCapacity() },
 		memory: { ...GetMemPerformance() },
-		//FIXME: on peut demander autorisation pour video et audio a la fois.
-		// camera: await getMedia({ video: true, audio: true }),
-		camera: await getMedia({ video: true }),
+		camera: await GetMedia({ video: true }),
+		language : navigator.language.slice(0,2),
 		_3dEnabled: false,
 		_arEnabled: false,
 		...result,
 	};
 
-	//FIXME: to refactory - it will be simplified with GetGPUCapacity function
 	data._3dEnabled =
 		data.gpu.gl_renderer.includes("WebGL") && isES6() ? true : false;
 	data._arEnabled =
-		data._3dEnabled && data.device.model && data.camera ? true : false;
+		data._3dEnabled && data.device.mobile && data.camera ? true : false;
 
 	if (callback) callback(data);
 	return data;
 }
 
-async function getMedia(constraints) {
+
+async function GetMedia(constraints) {
 	let stream = null;
 	try {
 		stream = await navigator.mediaDevices.getUserMedia(constraints);
@@ -52,7 +51,7 @@ async function getMedia(constraints) {
  * @returns {{}} data object
  */
 function GetMemPerformance() {
-	let data = {};
+	let _data = {};
 	let performance =
 		window.performance ||
 		window.mozPerformance ||
@@ -67,10 +66,15 @@ function GetMemPerformance() {
 			if (current?.constructor.name === "Object") {
 				for (let key in current) {
 					let val = current[key];
-					data[`${key}_bytes`] = val;
+					_data[key] = val;
 				}
 			}
 		}
+	}
+	let data = {
+		limit_heap_byte : _data.jsHeapSizeLimit,
+		total_heap : `${_data.totalJSHeapSize / _data.jsHeapSizeLimit * 100}%`,
+		used_heap : `${_data.usedJSHeapSize / _data.jsHeapSizeLimit * 100}%`,
 	}
 	return data;
 }
