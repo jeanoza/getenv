@@ -9,18 +9,21 @@ To call it simply call GetEnv function
 
 ```js
     // callback way
-    GetEnv(data => {})
+    GetEnv(data => {
+        //use data
+    })
 
     // await way
     let data = await GetEnv()
 
     // async way
-    GetEnv().then(data => {})
+    GetEnv().then(data => {
+        //use data
+    })
 ```
 
 ## TODO : 
 
 - Add documentation comment to GetEnv function and it's returned datas
 - Refactorization
-- Add more data (asked from Clement)
 - Try to get rid of ui-parser ?

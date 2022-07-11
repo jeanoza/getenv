@@ -1,35 +1,62 @@
+/**
+ * Get user's environnement datas
+ * @param {function} callback 
+ * @returns {{}}
+ */
 async function GetEnv(callback) {
-	let result = new UAParser().getResult();
-
-	var data = {
+	let data = {
 		es_version: isES6() ? "ES6" : "ES5",
-		monitor: {
-			capacity: {
-				width: window.screen.availWidth,
-				height: window.screen.availHeight,
-			},
-			current: {
-				width: window.innerWidth,
-				height: window.innerHeight,
-			},
-		},
-		connection: {
-			network: navigator.connection.effectiveType,
-			round_trip_time: navigator.connection.rtt,
-		},
+		monitor: { ...GetMonitor()},
+		connection: {...GetConnect()},
 		gpu: { ...GetGPUCapacity() },
 		memory: { ...GetMemPerformance() },
 		camera: await GetMedia({ video: true }),
 		language : navigator.language.slice(0,2),
 		_3dEnabled: undefined,
 		_arEnabled: undefined,
-		...result,
+		...new UAParser().getResult()
 	};
 
 	data._3dEnabled = data.gpu.gl_renderer.includes("WebGL") && isES6() ? true : false;
 	data._arEnabled = GetArCapacity(data._3dEnabled, data.device.model, data.camera)
+
+	document.addEventListener('devicechange', e => {
+		console.log(e);
+
+	})
+
 	if (callback) callback(data);
 	return data;
+}
+
+/**
+ * Getter user connection infos
+ * @returns {{network:string, rtt:number}}
+ */
+
+function GetConnect () {
+	return {
+		network: navigator.connection.effectiveType,
+		round_trip_time: navigator.connection.rtt,
+	}
+}
+
+/**
+ * Getter user display infos
+ * @returns {{capacity:{}, current:{}}}
+ */
+function GetMonitor ()
+{
+	return {
+		capacity: {
+			width: window.screen.availWidth,
+			height: window.screen.availHeight,
+		},
+		current: {
+			width: window.innerWidth,
+			height: window.innerHeight,
+		},
+	}
 }
 
 //marche pas : /SM-S90*_/ *is number _is alpha_majuscule/number
