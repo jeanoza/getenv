@@ -20,10 +20,9 @@ async function GetEnv(callback) {
 	data._3dEnabled = data.gpu.gl_renderer.includes("WebGL") && isES6() ? true : false;
 	data._arEnabled = GetArCapacity(data._3dEnabled, data.device.model, data.camera)
 
-	document.addEventListener('devicechange', e => {
-		console.log(e);
-
-	})
+	// document.addEventListener('devicechange', e => {
+	// 	console.log(e);
+	// })
 
 	if (callback) callback(data);
 	return data;
