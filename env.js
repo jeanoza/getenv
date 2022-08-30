@@ -10,7 +10,7 @@ async function GetEnv(callback) {
 		connection: {...GetConnect()},
 		gpu: { ...GetGPUCapacity() },
 		memory: { ...GetMemPerformance() },
-		camera: await GetMedia({ video: true }),
+		// camera: await GetMedia({ video: true }), // removed by Clement's request
 		language : navigator.language.slice(0,2),
 		_3dEnabled: undefined,
 		_arEnabled: undefined,
@@ -94,11 +94,12 @@ function GetMonitor ()
  * Getter to update _arEnabled boolean in data object
  * @param {boolean} _3dEnabled 
  * @param {string | undefined} mobile 
- * @param {boolean} camera 
+ * @param {string | undefined} type 'mobile' | 'tablet'
+//  * @param {boolean} camera // removed by Clement's request.
  * @return {boolean} 
  */
-function GetArCapacity(_3dEnabled, mobile, camera ) {
-	if (_3dEnabled && camera && !/^SM-S90[0-9][A-Z, 0-9, \/]/.test(mobile)) return true;
+function GetArCapacity(_3dEnabled, mobile, type ) {
+	if (_3dEnabled && !/^SM-S90[0-9][A-Z, 0-9, \/]/.test(mobile) && (type === 'mobile' || type === 'tablet')) return true;
 	return false;
 }
 
